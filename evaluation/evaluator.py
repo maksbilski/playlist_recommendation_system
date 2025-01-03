@@ -1,4 +1,4 @@
-from metrics import calculate_ndcg, calculate_recall, calculate_precision
+from .metrics import calculate_ndcg, calculate_recall, calculate_precision
 
 
 class Evaluator:
@@ -10,7 +10,7 @@ class Evaluator:
                  ground_truth_df):
         merged_df = predictions_df.merge(
             ground_truth_df,
-            on=['user_id', 'item_id'],
+            on=['user_id', 'track_id'],
             how='left',
             suffixes=('_pred', '')
         ).fillna({'score': 0})
