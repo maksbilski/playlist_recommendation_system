@@ -3,10 +3,9 @@ import torch.optim as optim
 
 
 class GMFTrainer:
-    def __init__(self, model, train_loader, val_loader, device):
+    def __init__(self, model, train_loader, device):
         self.model = model
         self.train_loader = train_loader
-        self.val_loader = val_loader
         self.device = device
 
     def train(self, epochs, learning_rate):
@@ -17,7 +16,7 @@ class GMFTrainer:
             self.model.train()
             total_loss = 0
             
-            for batch_idx, (user_ids, item_ids, labels) in enumerate(self.train_loader):
+            for user_ids, item_ids, labels in self.train_loader:
                 predictions = self.model(user_ids, item_ids)
                 loss = criterion(predictions, labels)
                 
