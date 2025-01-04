@@ -13,7 +13,7 @@ class Evaluator:
             on=['user_id', 'track_id'],
             how='left',
             suffixes=('_pred', '')
-        ).fillna({'score': 0.5})
+        ).fillna({'score': 0.0})
 
         metrics = {}
 

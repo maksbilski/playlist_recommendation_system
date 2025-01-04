@@ -14,7 +14,7 @@ def calculate_ndcg(user_df, k):
 
 
 def calculate_recall(user_df, k):
-    relevant_items = set(user_df[user_df['score'] > 0.7]['track_id'])
+    relevant_items = set(user_df[user_df['score'] > 1.0]['track_id'])
     if not relevant_items:
         return 0
 
@@ -26,6 +26,6 @@ def calculate_recall(user_df, k):
 
 def calculate_precision(user_df, k):
     top_k_items = user_df.nlargest(k, 'score_pred')
-    hits = len(top_k_items[top_k_items['score'] > 0.7])
+    hits = len(top_k_items[top_k_items['score'] > 1.0])
 
     return hits / len(top_k_items)
