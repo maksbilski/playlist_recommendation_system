@@ -10,7 +10,7 @@ class GMFTrainer:
 
     def train(self, epochs, learning_rate):
         self.model = self.model.to(self.device)
-        criterion = nn.L1Loss()
+        criterion = nn.MSELoss()
         optimizer = optim.SGD(self.model.parameters(), lr=learning_rate)    
         for epoch in range(epochs):
             self.model.train()

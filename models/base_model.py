@@ -13,6 +13,6 @@ class GMF(nn.Module):
         user_embedded = self.user_embedding(user_input)
         item_embedded = self.item_embedding(item_input)
         
-        prediction = torch.matmul(user_embedded, torch.t(item_embedded))
-        
+        prediction = (user_embedded * item_embedded).sum(dim=1) 
+
         return prediction.squeeze()
