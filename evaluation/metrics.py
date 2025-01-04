@@ -2,10 +2,13 @@ import numpy as np
 
 def calculate_ndcg(user_df, k):
     top_k = user_df.nlargest(k, 'score_pred')
-    dcg = np.sum(top_k['score'] / np.log2(np.arange(1, len(top_k) + 1)))
+    dcg = np.sum(top_k['score'] / np.log2(np.arange(1, k + 1) + 1))
 
-    ideal_order = user_df.nlargest(k, 'score')
-    idcg = np.sum(ideal_order['score'] / np.log2(np.arange(1, len(ideal_order) + 1)))
+    ideal_order = top_k.sort_values(by='score', ascending=False)
+    idcg = np.sum(ideal_order['score'] / np.log2(np.arange(1, k + 1) + 1))
+
+    if idcg == 0:
+        return 0.0
 
     return dcg / idcg
 
