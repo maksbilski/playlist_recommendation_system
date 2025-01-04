@@ -43,4 +43,4 @@ class SessionDataProcessor:
 
 def calculate_interaction_score(events):
     score = sum(-1.0 if e == 'skip' else 0.1 if e == 'play' else 1.0 if e == 'like' else 0.0 for e in events)
-    return 1 / (1 + np.exp(-score))
+    return score
