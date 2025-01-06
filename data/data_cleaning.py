@@ -16,7 +16,7 @@ def remove_sessions_with_wrong_track_id(tracks_df, sessions_df):
     return sessions_df[sessions_df['track_id'].isin(valid_track_ids)]
 
 
-def process_sessions_jsonl(tracks_filepath, sessions_filepath, output_filepath, chunk_size=100000):
+def clean_sessions_jsonl(tracks_filepath, sessions_filepath, output_filepath, chunk_size=100000):
     tracks_df = pd.read_json(tracks_filepath, lines=True)
     with open(sessions_filepath, 'r') as fin, open(output_filepath, 'w') as fout:
         chunk = []
