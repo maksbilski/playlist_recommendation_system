@@ -1,16 +1,18 @@
 import numpy as np
+import torch
+from sklearn.metrics import ndcg_score
 
 def calculate_ndcg(user_df, k):
     top_k = user_df.nlargest(k, 'score_pred')
-    dcg = np.sum(top_k['score'] / np.log2(np.arange(1, k + 1) + 1))
 
-    ideal_order = top_k.sort_values(by='score', ascending=False)
-    idcg = np.sum(ideal_order['score'] / np.log2(np.arange(1, k + 1) + 1))
+    sigmoid = torch.nn.Sigmoid()
 
-    if idcg == 0:
-        return 0.0
+    normalized_pred = sigmoid(torch.tensor(user_df['score_pred'].values)).numpy()
+    normalized_gt = sigmoid(torch.tensor(user_df['score'].values)).numpy()
 
-    return dcg / idcg
+    return ndcg_score(y_true=normalized_gt.reshape(1, -1),
+                      y_score=normalized_pred.reshape(1, -1),
+                      k=k)
 
 
 def calculate_recall(user_df, k):
