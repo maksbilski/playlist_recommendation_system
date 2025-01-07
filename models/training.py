@@ -49,6 +49,7 @@ class GMFTrainer:
             epoch_val_loss = np.mean(val_losses)
             epoch_train_losses.append(epoch_train_loss)
             epoch_val_losses.append(epoch_val_loss)
+            print(f'Epoch: {epoch}; Train loss: {epoch_train_loss}; Val loss: {epoch_val_loss}')
         return epoch_train_losses, epoch_val_losses
 
             
