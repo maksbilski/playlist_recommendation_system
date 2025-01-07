@@ -1,6 +1,7 @@
 import torch
 
 def predict(model, data_loader, device):
+    model = model.to(device)
     model.eval()
     predictions = []
     for user_ids, item_ids, labels in data_loader:
