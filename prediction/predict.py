@@ -4,7 +4,7 @@ def predict(model, data_loader, device):
     model = model.to(device)
     model.eval()
     predictions = []
-    for user_ids, item_ids, labels in data_loader:
+    for user_ids, item_ids, labels, weights in data_loader:
         user_ids = user_ids.to(device)
         item_ids = item_ids.to(device)
         labels = labels.to(device)
