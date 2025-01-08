@@ -11,17 +11,19 @@ class GMF(nn.Module):
         self.user_embedding = nn.Embedding(num_embeddings=n_users, embedding_dim=embedding_dim)
         self.item_embedding = nn.Embedding(num_embeddings=n_items, embedding_dim=embedding_dim)
         self.dropout = nn.Dropout(dropout_rate)
+
         if bias:
             self.user_bias = nn.Parameter(torch.zeros(n_users))
             self.item_bias = nn.Parameter(torch.zeros(n_items))
             self.offset = nn.Parameter(torch.zeros(1))
+
         if init:
-            self.user_embedding.weight.data.uniform_(0., 0.05)
-            self.item_embedding.weight.data.uniform_(0., 0.05)
+            self.user_embedding.weight.data.uniform_(-0.1, 0.1)
+            self.item_embedding.weight.data.uniform_(-0.1, 0.1)
 
     def forward(self, user_input, item_input):
-        user_embedded = self.user_embedding(user_input)
-        item_embedded = self.item_embedding(item_input)
+        user_embedded = self.dropout(self.user_embedding(user_input))
+        item_embedded = self.dropout(self.item_embedding(item_input))
 
         element_product = (user_embedded * item_embedded).sum(dim=1)
 
