@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 
 
-class GMF(nn.Module):
+class WMF(nn.Module):
     def __init__(self, n_users, n_items, embedding_dim=8, dropout_rate=0.2, init=False, bias=False, sigmoid=False):
-        super(GMF, self).__init__()
+        super(WMF, self).__init__()
 
         self.bias = bias
         self.sigmoid = sigmoid
