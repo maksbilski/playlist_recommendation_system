@@ -32,8 +32,8 @@ class IDEncoder:
 
 
 def calculate_score(events):
-    score = sum(1.0 if e == 'like' else 0.1 if e == 'play' 
-                   else -1.0 if e == 'skip' else 0.0 for e in events)
+    score = sum(1.0 if e == 'like' else 1.00 if e == 'play' 
+                   else 0.0 if e == 'skip' else 0.0 for e in events)
     return score
 
 
