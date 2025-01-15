@@ -2,7 +2,7 @@ import logging
 import json
 from datetime import datetime
 import random
-from typing import List, Dict
+from typing import List
 from service_models import AdvancedModel
 
 class GroupPlaylistService:
