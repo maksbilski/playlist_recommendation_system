@@ -1,9 +1,10 @@
 import logging
 import json
-from datetime import datetime
 import random
-from typing import List
-from service_models import AdvancedModel
+from datetime import datetime
+from typing import Dict, List
+from .advanced_model import AdvancedModel
+from .basic_model import BasicModel
 
 class GroupPlaylistService:
     def __init__(self, data_path: str, model_path: str, log_path: str):
@@ -17,10 +18,10 @@ class GroupPlaylistService:
         logging.basicConfig(
             filename=f"{log_path}/ab_test_{datetime.now().strftime('%Y%m%d')}.log",
             level=logging.INFO,
-            format='%(asctime)s\t%(message)s'
+            format='%(message)s'
         )
     
-    def get_recommendations(self, user_ids: List[str], n: int = 30):
+    def get_recommendations(self, user_ids: List[str], n: int = 30) -> Dict:
         model_type = random.choices(
             list(self.weights.keys()), 
             weights=list(self.weights.values())
@@ -31,7 +32,7 @@ class GroupPlaylistService:
         
         log_entry = {
             'timestamp': datetime.now().isoformat(),
-            'model': model_type,
+            'model_type': model_type,
             'group_size': len(user_ids),
             'user_ids': user_ids,
             'recommended_tracks': tracks,
