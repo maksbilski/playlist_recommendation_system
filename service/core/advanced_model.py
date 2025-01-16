@@ -5,10 +5,11 @@ from itertools import product
 from typing import List
 from models.wmf import WMF
 from prediction.predict import predict
+from .model_interface import ModelInterface
 
 
-class AdvancedModel:
-    def __init__(self, model_path: str):
+class AdvancedModel(ModelInterface):
+    def __init__(self, model_path: str) -> None:
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         model_data = torch.load(model_path)
         config = model_data["model_config"]

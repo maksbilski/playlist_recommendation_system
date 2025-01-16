@@ -1,9 +1,10 @@
-from typing import List
 import pandas as pd
 import random
+from typing import List
+from .model_interface import ModelInterface
 
-class BasicModel:
-    def __init__(self, data_path: str):
+class BasicModel(ModelInterface):
+    def __init__(self, data_path: str) -> None:
         self.data_path = data_path
         self.user_plays = self._prepare_user_data()
 
