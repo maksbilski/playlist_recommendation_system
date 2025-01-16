@@ -4,7 +4,7 @@ from .metrics import calculate_ndcg, calculate_recall, calculate_precision
 
 
 class Evaluator:
-    def __init__(self, k_values: List[int], relevance_threshold: float):
+    def __init__(self, k_values: List[int], relevance_threshold: float) -> None:
         self.k_values = k_values
         self.relevance_threshold = relevance_threshold 
 

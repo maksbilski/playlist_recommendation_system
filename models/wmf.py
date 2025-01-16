@@ -3,7 +3,15 @@ import torch.nn as nn
 
 
 class WMF(nn.Module):
-    def __init__(self, n_users, n_items, embedding_dim=8, dropout_rate=0.2, init=False, bias=False, sigmoid=False):
+    def __init__(self, 
+                 n_users: int,
+                 n_items: int,
+                 embedding_dim: int = 8,
+                 dropout_rate:float = 0.2,
+                 init: bool = False,
+                 bias: bool = False,
+                 sigmoid: bool = False
+                 ) -> None:
         super(WMF, self).__init__()
 
         self.bias = bias
@@ -21,7 +29,7 @@ class WMF(nn.Module):
             self.user_embedding.weight.data.uniform_(-0.1, 0.1)
             self.item_embedding.weight.data.uniform_(-0.1, 0.1)
 
-    def forward(self, user_input, item_input):
+    def forward(self, user_input: torch.Tensor, item_input: torch.Tensor) -> torch.Tensor:
         user_embedded = self.dropout(self.user_embedding(user_input))
         item_embedded = self.dropout(self.item_embedding(item_input))
 

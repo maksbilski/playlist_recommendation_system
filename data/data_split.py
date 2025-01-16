@@ -1,4 +1,6 @@
-def split_data(sessions_df, train_size=0.6, val_size=0.2):
+import pandas as pd
+
+def split_data(sessions_df: pd.DataFrame, train_size: float = 0.6, val_size: float = 0.2):
     sessions_sorted = sessions_df.sort_values('timestamp')
     
     n = len(sessions_sorted)

@@ -1,8 +1,9 @@
+from numpy import void
 import pandas as pd
 import json
 
 
-def remove_sessions_with_null(df):
+def remove_sessions_with_null(df: pd.DataFrame):
     df = df[df['event_type'] != 'advertisment']
     df = df[df['track_id'].notna()]
     df['user_id'] = df['user_id'].fillna(method='ffill')
@@ -11,12 +12,12 @@ def remove_sessions_with_null(df):
     return df
 
 
-def remove_sessions_with_wrong_track_id(tracks_df, sessions_df):
+def remove_sessions_with_wrong_track_id(tracks_df: pd.DataFrame, sessions_df: pd.DataFrame) -> pd.DataFrame:
     valid_track_ids = set(tracks_df['id'].dropna().unique())
     return sessions_df[sessions_df['track_id'].isin(valid_track_ids)]
 
 
-def clean_sessions_jsonl(tracks_filepath, sessions_filepath, output_filepath, chunk_size=100000):
+def clean_sessions_jsonl(tracks_filepath: str, sessions_filepath: str, output_filepath:str, chunk_size: int = 100000) -> None:
     tracks_df = pd.read_json(tracks_filepath, lines=True)
     with open(sessions_filepath, 'r') as fin, open(output_filepath, 'w') as fout:
         chunk = []

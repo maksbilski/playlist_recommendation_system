@@ -1,6 +1,9 @@
 import torch
+import torch.nn as nn
+import numpy as np
+from torch.utils.data import DataLoader
 
-def predict(model, data_loader, device):
+def predict(model: nn.Module, data_loader: DataLoader, device: torch.device) -> np.ndarray:
     model = model.to(device)
     model.eval()
     predictions = []

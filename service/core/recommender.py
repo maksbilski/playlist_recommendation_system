@@ -7,7 +7,7 @@ from .advanced_model import AdvancedModel
 from .basic_model import BasicModel
 
 class GroupPlaylistService:
-    def __init__(self, data_path: str, model_path: str, log_path: str):
+    def __init__(self, data_path: str, model_path: str, log_path: str) -> None:
         self.models = {
             'basic': BasicModel(data_path),
             'advanced': AdvancedModel(model_path)

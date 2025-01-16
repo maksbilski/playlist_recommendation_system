@@ -1,26 +1,37 @@
+from typing import List, Tuple
 import torch
 import numpy as np
 import torch.nn as nn
 import torch.optim as optim
+from torch.utils.data import DataLoader
 
 
 class WeightedMSELoss(nn.Module):
     def __init__(self):
         super().__init__()
         
-    def forward(self, predictions, labels, weights):
+    def forward(self, predictions: torch.Tensor, labels: torch.Tensor, weights: torch.Tensor) -> torch.Tensor:
         loss = weights * (labels - predictions) ** 2
         return loss.mean()
 
 
 class Trainer:
-    def __init__(self, model, train_loader, val_loader, device):
+    def __init__(self, 
+                 model: nn.Module,
+                 train_loader: DataLoader,
+                 val_loader: DataLoader,
+                 device: torch.device
+                 ) -> None:
         self.model = model
         self.train_loader = train_loader
         self.val_loader = val_loader
         self.device = device
 
-    def train_with_weight_decay(self, epochs, learning_rate, weight_decay=0.01):
+    def train_with_weight_decay(self, 
+                                epochs: int, 
+                                learning_rate: float, 
+                                weight_decay: float = 0.01
+                                ) -> Tuple[List[float], List[float]]:
         self.model = self.model.to(self.device)
         criterion = WeightedMSELoss()
         optimizer = optim.AdamW(self.model.parameters(), lr=learning_rate, weight_decay=weight_decay)

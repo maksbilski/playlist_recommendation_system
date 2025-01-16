@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.metrics import ndcg_score
 
 
-def calculate_ndcg(user_df, k):
+def calculate_ndcg(user_df: pd.DataFrame, k: int) -> float:
     pred_scores = user_df['score_pred'].values
     gt_scores = user_df['score'].values
     
