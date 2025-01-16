@@ -1,8 +1,15 @@
+import logging
+import sys
 from flask import Flask, request, jsonify
-from core.recommender import GroupPlaylistService
+from service.core.recommender import GroupPlaylistService
+
+logging.getLogger('werkzeug').disabled = True
+cli = sys.modules['flask.cli']
+cli.show_server_banner = lambda *_: None
 
 app = Flask(__name__)
-recommender_service = GroupPlaylistService()
+app.logger.disabled = True
+recommender_service = GroupPlaylistService('./data_files/train_sessions.jsonl', './model_files/wmf_model.pth', './log_files')
 
 @app.route('/group_playlist', methods=['POST'])
 def recommend():
