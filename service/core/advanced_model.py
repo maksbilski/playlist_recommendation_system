@@ -11,7 +11,7 @@ from .model_interface import ModelInterface
 class AdvancedModel(ModelInterface):
     def __init__(self, model_path: str) -> None:
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        model_data = torch.load(model_path)
+        model_data = torch.load(model_path, map_location=self.device)
         config = model_data["model_config"]
         self.user_encoder = model_data["user_encoder"]
         self.track_encoder = model_data["track_encoder"]
