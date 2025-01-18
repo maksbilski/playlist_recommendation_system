@@ -40,3 +40,21 @@ def calculate_precision(user_df: pd.DataFrame, k: int, relevance_threshold: floa
     hits = len(top_k_items[top_k_items['score'] > relevance_threshold])
 
     return hits / len(top_k_items)
+
+
+def print_metrics(metrics, k_list):
+    print("\nModel Performance Metrics:")
+    print("=" * 50)
+    
+    for k in k_list:
+        print(f"\nMetrics for top-{k} recommendations:")
+        print("-" * 35)
+        
+        metrics_at_k = {
+            "NDCG": (metrics[f'NDCG@{k}_mean'] * 100, metrics[f'NDCG@{k}_std'] * 100),
+            "Precision": (metrics[f'Precision@{k}_mean'] * 100, metrics[f'Precision@{k}_std'] * 100),
+            "Recall": (metrics[f'Recall@{k}_mean'] * 100, metrics[f'Recall@{k}_std'] * 100)
+        }
+        
+        for metric_name, (mean, std) in metrics_at_k.items():
+            print(f"{metric_name:10} = {mean:6.2f}% ± {std:6.2f}%")
